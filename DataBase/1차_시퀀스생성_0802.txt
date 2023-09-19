@@ -1,0 +1,241 @@
+----------------------------------------------------------------------------------
+DROP SEQUENCE ACC_SEQ; 
+DROP SEQUENCE BO_SEQ;
+DROP SEQUENCE COM_SEQ;
+DROP SEQUENCE GB_SEQ;
+DROP SEQUENCE MIL_SEQ;
+DROP SEQUENCE PAY_SEQ;
+DROP SEQUENCE PH_SEQ;
+DROP SEQUENCE REF_SEQ;
+DROP SEQUENCE RES_SEQ;
+DROP SEQUENCE REV_SEQ;
+DROP SEQUENCE ROM_SEQ;
+   
+DROP TABLE "ACCOMMODATION" CASCADE CONSTRAINTS;
+DROP TABLE "ATTENDANCE" CASCADE CONSTRAINTS;
+DROP TABLE "BOARD" CASCADE CONSTRAINTS;
+DROP TABLE "CHAT_HIS" CASCADE CONSTRAINTS;
+DROP TABLE "COMENT" CASCADE CONSTRAINTS;
+DROP TABLE "COUPON" CASCADE CONSTRAINTS;
+DROP TABLE "CP_HAVING" CASCADE CONSTRAINTS;
+DROP TABLE "GB_PRTCP" CASCADE CONSTRAINTS;
+DROP TABLE "GROUPBUYING" CASCADE CONSTRAINTS;
+DROP TABLE "HIS_MILEAGE" CASCADE CONSTRAINTS;
+DROP TABLE "MEM_IMAGE" CASCADE CONSTRAINTS;
+DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
+DROP TABLE "MILEAGE" CASCADE CONSTRAINTS;
+DROP TABLE "PAYMENT" CASCADE CONSTRAINTS;
+DROP TABLE "PHOTO" CASCADE CONSTRAINTS;
+DROP TABLE "REFUND" CASCADE CONSTRAINTS;
+DROP TABLE "RESERVATION" CASCADE CONSTRAINTS;
+DROP TABLE "REVIEW" CASCADE CONSTRAINTS;
+DROP TABLE "ROOM" CASCADE CONSTRAINTS;
+DROP TABLE "SERVICE_LIST" CASCADE CONSTRAINTS;
+DROP TABLE "SERVICE_INFO" CASCADE CONSTRAINTS;
+DROP TABLE "WISHLIST" CASCADE CONSTRAINTS;   
+   
+----------------------------------전체 삭제---------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--MEMBER 
+
+INSERT INTO member (mem_id, mem_pass, mem_name, mem_email, mem_tel, mem_birth, mem_gender, mem_code, mem_mil)
+VALUES ('LittleQueka', '1234', '김정하', 'little@naver.com', '010-1234-5678', TO_DATE('2002-12-15', 'YYYY-MM-DD'), 'Female','0', 1000);
+
+INSERT INTO member (mem_id, mem_pass, mem_name, mem_email, mem_tel, mem_birth, mem_gender, mem_code, mem_mil)
+VALUES ('BigQueka', '1234', '유선영', 'big@naver.com', '010-1234-5678', TO_DATE('2002-12-18', 'YYYY-MM-DD'), 'Female','0', 1000);
+----------------------------------------------------------------------------------
+--BOARD 
+
+CREATE SEQUENCE bo_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+INSERT INTO BOARD (BO_CODE, BO_TYPE, BO_TITLE, BO_CONTENT, BO_DATE, MEM_ID)
+VALUES (('JJBO23' || LPAD(BO_SEQ.NEXTVAL,4,'0')), '1:1문의', '테스트제목입니다1', '테스트내용입니다1','2023-08-01', 'LittleQueka');
+
+INSERT INTO BOARD (BO_CODE, BO_TYPE, BO_TITLE, BO_CONTENT, BO_DATE, MEM_ID)
+VALUES (('JJBO23' || LPAD(BO_SEQ.NEXTVAL,4,'0')), '1:1문의', '테스트제목입니다2', '테스트내용입니다2','2023-08-01', 'BigQueka');
+
+---------------------------------------------------------------------------------
+--COMENT
+
+CREATE SEQUENCE com_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+       
+INSERT INTO COMENT (CO_CODE, BO_CODE, CO_CONTENT)
+VALUES ('JJCO23' || LPAD(COM_SEQ.NEXTVAL,4,'0'), 'JJBO230001', '테스트댓글입니다1');
+
+INSERT INTO COMENT (CO_CODE, BO_CODE, CO_CONTENT)
+VALUES ('JJCO23' || LPAD(COM_SEQ.NEXTVAL,4,'0'), 'JJBO230002', '테스트댓글입니다2');
+
+---------------------------------------------------------------------------------
+--ACCOMODATION
+
+ create sequence acc_seq         
+   increment by 1         
+   start with 1         
+   minvalue 1         
+   maxvalue 9999         
+   nocycle         
+   nocache         
+   noorder;         
+            
+   insert into accommodation (a_code, a_name, a_addr, a_tel, a_wnum, a_entime, a_extime, a_type)         
+   values('JJAC23' || lpad(acc_seq.nextval,4,'0'),'숙박업체1','대전광역시 중구','010-1234-5678' ,0,'0700','1800','호텔');  
+   
+   insert into accommodation (a_code, a_name, a_addr, a_tel, a_wnum, a_entime, a_extime, a_type)         
+   values('JJAC23' || lpad(acc_seq.nextval,4,'0'),'숙박업체2','대전광역시 서구','010-5656-5678' ,0,'0800','1800','펜션');  
+   
+   insert into accommodation (a_code, a_name, a_addr, a_tel, a_wnum, a_entime, a_extime, a_type)         
+   values('JJAC23' || lpad(acc_seq.nextval,4,'0'),'숙박업체3','대전광역시 동구','010-7777-2262' ,0,'0800','2000','게하');  
+-----------------------------------------------------------------------------------
+--MILEAGE
+COMMIT;
+
+CREATE SEQUENCE mil_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 99999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+
+
+   insert into MILEAGE (MIL_CODE, MIL_RESAMOUNT, MIL_USEAMOUNT, MEM_ID)
+   values('ML23' || lpad(mil_seq.nextval,5,'0'),'1000','0', 'LittleQueka');  
+   
+   insert into MILEAGE (MIL_CODE, MIL_RESAMOUNT, MIL_USEAMOUNT, MEM_ID)
+   values('ML23' || lpad(mil_seq.nextval,5,'0'),'1000','0', 'BigQueka'); 
+-----------------------------------------------------------------------------------
+--ROOM
+
+CREATE SEQUENCE rom_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into ROOM (R_CODE, A_CODE, R_TYPE, R_MIN, R_MAX, R_PRICE, R_INVEN)
+    values('JJRM23' || lpad(rom_seq.nextval,4,'0'),'JJAC230001','스위트','1', '2', '200000', '5');  
+
+    insert into ROOM (R_CODE, A_CODE, R_TYPE, R_MIN, R_MAX, R_PRICE, R_INVEN)
+    values('JJRM23' || lpad(rom_seq.nextval,4,'0'),'JJAC230002','스탠다드','2', '3', '300000', '5');  
+
+----------------------------------------------------------------------------------------------------
+--RESERVATION
+
+CREATE SEQUENCE res_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into reservaTion (RES_CODE, R_CODE, MEM_ID, RES_CIN, RES_COUT, RES_MEMO, RES_STATUS)
+    values('RS23' || lpad(res_seq.nextval,6,'0'),'JJRM230001','LittleQueka', '2023-08-02', '2023-08-04', '환기가 잘되는 곳으로 부탁해요.', '예약완료');  
+      
+    insert into reservaTion (RES_CODE, R_CODE, MEM_ID, RES_CIN, RES_COUT, RES_MEMO, RES_STATUS)
+    values('RS23' || lpad(res_seq.nextval,6,'0'),'JJRM230002','BigQueka', '2023-08-02', '2023-08-05', '통풍이 잘되는 곳으로 부탁해요.', '예약완료');  
+
+COMMIT;
+--------------------------------------------------------------------------------
+--PAYMENT
+
+CREATE SEQUENCE pay_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into payment (PAY_NO, RES_CODE, PAY_DATE, PAY_PRICE, PAY_METHOD)
+    values('PY23' || lpad(pay_seq.nextval,6,'0'),'RS23000001','2023-07-31','230000', '토스');  
+
+    insert into payment (PAY_NO, RES_CODE, PAY_DATE, PAY_PRICE, PAY_METHOD)
+    values('PY23' || lpad(pay_seq.nextval,6,'0'),'RS23000002','2023-07-21','330000', '토스');  
+
+-------------------------------------------------------------------------------------------------
+--REFUND
+CREATE SEQUENCE REF_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+   
+    insert into REFUND (RF_CODE, PAY_NO, RF_DATE)
+    values('RF23' || lpad(REF_seq.nextval,6,'0'),'PY23000001','2023-08-01');  
+       
+    insert into REFUND (RF_CODE, PAY_NO, RF_DATE)
+    values('RF23' || lpad(REF_seq.nextval,6,'0'),'PY23000002','2023-07-30');  
+--------------------------------------------------------------------------------------------
+--REVIEW
+CREATE SEQUENCE REV_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into REVIEW (REV_CODE, RES_CODE, REV_DATE, REV_SCORE, REV_TITLE, REV_CONTENT)
+    values('JJRV23' || lpad(REV_seq.nextval,4,'0'),'RS23000001','2023-08-02','4','리뷰제목테스트1','리뷰내용테스트1');  
+
+    insert into REVIEW (REV_CODE, RES_CODE, REV_DATE, REV_SCORE, REV_TITLE, REV_CONTENT)
+    values('JJRV23' || lpad(REV_seq.nextval,4,'0'),'RS23000002','2023-08-04', '5','리뷰제목테스트2','리뷰내용테스트2');  
+
+--------------------------------------------------------------------------------------------------
+--GROUPBUYING
+
+CREATE SEQUENCE GB_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into GROUPBUYING (GB_CODE, MEM_ID, GB_TITLE, GB_CONTENT, GB_INVEN, GB_DATE)
+    values('JJGB23' || lpad(GB_seq.nextval,4,'0'),'LittleQueka','공구제목테스트1','공구내용테스트1','5','2023-08-01');  
+
+    insert into GROUPBUYING (GB_CODE, MEM_ID, GB_TITLE, GB_CONTENT, GB_INVEN, GB_DATE)
+    values('JJGB23' || lpad(GB_seq.nextval,4,'0'),'BigQueka','공구제목테스트2','공구내용테스트2','5','2023-08-02');  
+-----------------------------------------------------------------------------------------------
+--PHOTO
+CREATE SEQUENCE PH_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+
+    insert into PHOTO (PT_CODE, PT_NAME, PT_TYPE)
+    values('J' || lpad(PH_seq.nextval,10,'0'),'LittleQueka.jpg','프로필');  
+
+    insert into PHOTO (PT_CODE, PT_NAME, PT_TYPE)
+    values('J' || lpad(PH_seq.nextval,10,'0'),'BigQueka.jpg','프로필');  
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+       

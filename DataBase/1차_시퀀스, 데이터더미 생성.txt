@@ -1,0 +1,894 @@
+CREATE TABLE ACCOMMODATION
+(
+	A_CODE               VARCHAR2(10) NOT NULL ,
+	A_NAME               VARCHAR2(50) NOT NULL ,
+	A_ADDR               VARCHAR2(200) NOT NULL ,
+	A_TEL                VARCHAR2(20) NOT NULL ,
+	A_WNUM               NUMBER(4) NOT NULL ,
+	A_ENTIME             VARCHAR2(10) NOT NULL ,
+	A_EXTIME             VARCHAR2(10) NOT NULL ,
+	A_TYPE               VARCHAR2(10) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK숙박업체 ON ACCOMMODATION
+(A_CODE   ASC);
+
+
+
+ALTER TABLE ACCOMMODATION
+	ADD CONSTRAINT  XPK숙박업체 PRIMARY KEY (A_CODE);
+
+
+
+CREATE TABLE ATTENDANCE
+(
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	ATT_DATE             DATE NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK출석_체크 ON ATTENDANCE
+(MEM_ID   ASC,ATT_DATE   ASC);
+
+
+
+ALTER TABLE ATTENDANCE
+	ADD CONSTRAINT  XPK출석_체크 PRIMARY KEY (MEM_ID,ATT_DATE);
+
+
+
+CREATE TABLE BOARD
+(
+	BO_CODE              VARCHAR2(10) NOT NULL ,
+	BO_TYPE              VARCHAR2(20) NOT NULL ,
+	BO_TITLE             VARCHAR2(100) NOT NULL ,
+	BO_CONTENT           CLOB NOT NULL ,
+	BO_DATE              DATE NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK게시판 ON BOARD
+(BO_CODE   ASC);
+
+
+
+ALTER TABLE BOARD
+	ADD CONSTRAINT  XPK게시판 PRIMARY KEY (BO_CODE);
+
+
+
+CREATE TABLE CHAT_HIS
+(
+	GB_CODE              VARCHAR2(10) NOT NULL ,
+	CH_FILENAME          VARCHAR2(50) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK채팅이력 ON CHAT_HIS
+(GB_CODE   ASC);
+
+
+
+ALTER TABLE CHAT_HIS
+	ADD CONSTRAINT  XPK채팅이력 PRIMARY KEY (GB_CODE);
+
+
+
+CREATE TABLE COMENT
+(
+	CO_CODE              VARCHAR2(10) NOT NULL ,
+	BO_CODE              VARCHAR2(10) NOT NULL ,
+	CO_CONTENT           CLOB NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK댓글 ON COMENT
+(CO_CODE   ASC);
+
+
+
+ALTER TABLE COMENT
+	ADD CONSTRAINT  XPK댓글 PRIMARY KEY (CO_CODE);
+
+
+
+CREATE TABLE COUPON
+(
+	CO_CODE              VARCHAR2(10) NOT NULL ,
+	CO_NAME              VARCHAR2(30) NOT NULL ,
+	CO_RATE              NUMBER(2) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK쿠폰 ON COUPON
+(CO_CODE   ASC);
+
+
+
+ALTER TABLE COUPON
+	ADD CONSTRAINT  XPK쿠폰 PRIMARY KEY (CO_CODE);
+
+
+
+CREATE TABLE CP_HAVING
+(
+	CO_CODE              VARCHAR2(10) NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	CH_USE               VARCHAR2(2) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK쿠폰_보유자 ON CP_HAVING
+(CO_CODE   ASC,MEM_ID   ASC);
+
+
+
+ALTER TABLE CP_HAVING
+	ADD CONSTRAINT  XPK쿠폰_보유자 PRIMARY KEY (CO_CODE,MEM_ID);
+
+
+
+CREATE TABLE GB_PRTCP
+(
+	GB_CODE              VARCHAR2(10) NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK공동구매_참여자 ON GB_PRTCP
+(GB_CODE   ASC,MEM_ID   ASC);
+
+
+
+ALTER TABLE GB_PRTCP
+	ADD CONSTRAINT  XPK공동구매_참여자 PRIMARY KEY (GB_CODE,MEM_ID);
+
+
+
+CREATE TABLE GROUPBUYING
+(
+	GB_CODE              VARCHAR2(10) NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	GB_TITLE             VARCHAR2(100) NOT NULL ,
+	GB_CONTENT           CLOB NOT NULL ,
+	GB_INVEN             NUMBER(2) NOT NULL ,
+	GB_DATE              DATE NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK공동구매 ON GROUPBUYING
+(GB_CODE   ASC);
+
+
+
+ALTER TABLE GROUPBUYING
+	ADD CONSTRAINT  XPK공동구매 PRIMARY KEY (GB_CODE);
+
+
+
+CREATE TABLE HIS_MILEAGE
+(
+	MIL_CODE             VARCHAR2(10) NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	MIL_DATE             DATE NOT NULL ,
+	MIL_SAVEHIS          VARCHAR2(50) NULL ,
+	MIL_USEHIS           VARCHAR2(50) NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK마일리지내역 ON HIS_MILEAGE
+(MIL_CODE   ASC,MEM_ID   ASC);
+
+
+
+ALTER TABLE HIS_MILEAGE
+	ADD CONSTRAINT  XPK마일리지내역 PRIMARY KEY (MIL_CODE,MEM_ID);
+
+
+
+CREATE TABLE MEMBER
+(
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	MEM_PASS             VARCHAR2(30) NOT NULL ,
+	MEM_NAME             VARCHAR2(40) NOT NULL ,
+	MEM_EMAIL            VARCHAR2(50) NOT NULL ,
+	MEM_TEL              VARCHAR2(20) NOT NULL ,
+	MEM_BIRTH            DATE NOT NULL ,
+	MEM_GENDER           VARCHAR2(10) NOT NULL ,
+	MEM_CODE             VARCHAR2(10) NOT NULL ,
+	MEM_MIL              NUMBER(8) NOT NULL ,
+	MEM_PHOTO            VARCHAR2(300) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK회원 ON MEMBER
+(MEM_ID   ASC);
+
+
+
+ALTER TABLE MEMBER
+	ADD CONSTRAINT  XPK회원 PRIMARY KEY (MEM_ID);
+
+
+
+CREATE TABLE MILEAGE
+(
+	MIL_CODE             VARCHAR2(10) NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	MIL_RESAMOUNT        VARCHAR2(10) NULL ,
+	MIL_USEAMOUNT        VARCHAR2(10) NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK마일리지 ON MILEAGE
+(MIL_CODE   ASC,MEM_ID   ASC);
+
+
+
+ALTER TABLE MILEAGE
+	ADD CONSTRAINT  XPK마일리지 PRIMARY KEY (MIL_CODE,MEM_ID);
+
+
+
+CREATE TABLE PAYMENT
+(
+	PAY_NO               VARCHAR2(20) NOT NULL ,
+	RES_CODE             VARCHAR2(10) NOT NULL ,
+	PAY_DATE             DATE NOT NULL ,
+	PAY_PRICE            NUMBER(10) NOT NULL ,
+	PAY_METHOD           VARCHAR2(20) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK결제 ON PAYMENT
+(PAY_NO   ASC);
+
+
+
+ALTER TABLE PAYMENT
+	ADD CONSTRAINT  XPK결제 PRIMARY KEY (PAY_NO);
+
+
+
+CREATE TABLE PHOTO
+(
+	PT_CODE              VARCHAR2(15) NOT NULL ,
+	PT_OFILE             VARCHAR2(300) NOT NULL ,
+	PT_SFILE             VARCHAR2(300) NOT NULL ,
+	PT_TYPE              VARCHAR2(30) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK사진 ON PHOTO
+(PT_CODE   ASC);
+
+
+
+ALTER TABLE PHOTO
+	ADD CONSTRAINT  XPK사진 PRIMARY KEY (PT_CODE);
+
+
+
+CREATE TABLE REFUND
+(
+	RF_CODE              VARCHAR2(10) NOT NULL ,
+	PAY_NO               VARCHAR2(20) NOT NULL ,
+	RF_DATE              DATE NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK환불 ON REFUND
+(RF_CODE   ASC);
+
+
+
+ALTER TABLE REFUND
+	ADD CONSTRAINT  XPK환불 PRIMARY KEY (RF_CODE);
+
+
+
+CREATE TABLE RESERVATION
+(
+	RES_CODE             VARCHAR2(10) NOT NULL ,
+	R_CODE               VARCHAR2(10) NOT NULL ,
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	RES_CIN              DATE NOT NULL ,
+	RES_COUT             DATE NOT NULL ,
+	RES_MEMO             CLOB NOT NULL ,
+	RES_STATUS           VARCHAR2(15) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK예약 ON RESERVATION
+(RES_CODE   ASC);
+
+
+
+ALTER TABLE RESERVATION
+	ADD CONSTRAINT  XPK예약 PRIMARY KEY (RES_CODE);
+
+
+
+CREATE TABLE REVIEW
+(
+	REV_CODE             VARCHAR2(10) NOT NULL ,
+	RES_CODE             VARCHAR2(10) NOT NULL ,
+	REV_DATE             DATE NOT NULL ,
+	REV_SCORE            NUMBER(1) NOT NULL ,
+	REV_TITLE            VARCHAR2(30) NOT NULL ,
+	REV_CONTENT          CLOB NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK리뷰 ON REVIEW
+(REV_CODE   ASC);
+
+
+
+ALTER TABLE REVIEW
+	ADD CONSTRAINT  XPK리뷰 PRIMARY KEY (REV_CODE);
+
+
+
+CREATE TABLE ROOM
+(
+	R_CODE               VARCHAR2(10) NOT NULL ,
+	A_CODE               VARCHAR2(10) NOT NULL ,
+	R_TYPE               VARCHAR2(20) NOT NULL ,
+	R_MIN                NUMBER(10) NOT NULL ,
+	R_MAX                NUMBER(10) NOT NULL ,
+	R_PRICE              NUMBER(10) NOT NULL ,
+	R_INVEN              NUMBER(2) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK객실 ON ROOM
+(R_CODE   ASC);
+
+
+
+ALTER TABLE ROOM
+	ADD CONSTRAINT  XPK객실 PRIMARY KEY (R_CODE);
+
+
+
+CREATE TABLE SERVICE_INFO
+(
+	SI_CODE              VARCHAR2(10) NOT NULL ,
+	SI_NAME              VARCHAR2(20) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK숙박서비스상세 ON SERVICE_INFO
+(SI_CODE   ASC);
+
+
+
+ALTER TABLE SERVICE_INFO
+	ADD CONSTRAINT  XPK숙박서비스상세 PRIMARY KEY (SI_CODE);
+
+
+
+CREATE TABLE SERVICE_LIST
+(
+	A_CODE               VARCHAR2(10) NOT NULL ,
+	SI_CODE              VARCHAR2(10) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK숙박서비스 ON SERVICE_LIST
+(A_CODE   ASC,SI_CODE   ASC);
+
+
+
+ALTER TABLE SERVICE_LIST
+	ADD CONSTRAINT  XPK숙박서비스 PRIMARY KEY (A_CODE,SI_CODE);
+
+
+
+CREATE TABLE WISHLIST
+(
+	MEM_ID               VARCHAR2(30) NOT NULL ,
+	A_CODE               VARCHAR2(10) NOT NULL 
+);
+
+
+
+CREATE UNIQUE INDEX XPK위시리스트 ON WISHLIST
+(MEM_ID   ASC,A_CODE   ASC);
+
+
+
+ALTER TABLE WISHLIST
+	ADD CONSTRAINT  XPK위시리스트 PRIMARY KEY (MEM_ID,A_CODE);
+
+
+
+ALTER TABLE ATTENDANCE
+	ADD (CONSTRAINT R_13 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE BOARD
+	ADD (CONSTRAINT R_15 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE CHAT_HIS
+	ADD (CONSTRAINT R_32 FOREIGN KEY (GB_CODE) REFERENCES GROUPBUYING (GB_CODE));
+
+
+
+ALTER TABLE COMENT
+	ADD (CONSTRAINT R_33 FOREIGN KEY (BO_CODE) REFERENCES BOARD (BO_CODE));
+
+
+
+ALTER TABLE CP_HAVING
+	ADD (CONSTRAINT R_21 FOREIGN KEY (CO_CODE) REFERENCES COUPON (CO_CODE));
+
+
+
+ALTER TABLE CP_HAVING
+	ADD (CONSTRAINT R_22 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE GB_PRTCP
+	ADD (CONSTRAINT R_17 FOREIGN KEY (GB_CODE) REFERENCES GROUPBUYING (GB_CODE));
+
+
+
+ALTER TABLE GB_PRTCP
+	ADD (CONSTRAINT R_18 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE GROUPBUYING
+	ADD (CONSTRAINT R_16 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE HIS_MILEAGE
+	ADD (CONSTRAINT R_40 FOREIGN KEY (MIL_CODE, MEM_ID) REFERENCES MILEAGE (MIL_CODE, MEM_ID));
+
+
+
+ALTER TABLE MILEAGE
+	ADD (CONSTRAINT R_39 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE PAYMENT
+	ADD (CONSTRAINT R_10 FOREIGN KEY (RES_CODE) REFERENCES RESERVATION (RES_CODE));
+
+
+
+ALTER TABLE REFUND
+	ADD (CONSTRAINT R_14 FOREIGN KEY (PAY_NO) REFERENCES PAYMENT (PAY_NO));
+
+
+
+ALTER TABLE RESERVATION
+	ADD (CONSTRAINT R_3 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE RESERVATION
+	ADD (CONSTRAINT R_31 FOREIGN KEY (R_CODE) REFERENCES ROOM (R_CODE));
+
+
+
+ALTER TABLE REVIEW
+	ADD (CONSTRAINT R_8 FOREIGN KEY (RES_CODE) REFERENCES RESERVATION (RES_CODE));
+
+
+
+ALTER TABLE ROOM
+	ADD (CONSTRAINT R_29 FOREIGN KEY (A_CODE) REFERENCES ACCOMMODATION (A_CODE));
+
+
+
+ALTER TABLE SERVICE_LIST
+	ADD (CONSTRAINT R_23 FOREIGN KEY (A_CODE) REFERENCES ACCOMMODATION (A_CODE));
+
+
+
+ALTER TABLE SERVICE_LIST
+	ADD (CONSTRAINT R_25 FOREIGN KEY (SI_CODE) REFERENCES SERVICE_INFO (SI_CODE));
+
+
+
+ALTER TABLE WISHLIST
+	ADD (CONSTRAINT R_2 FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID));
+
+
+
+ALTER TABLE WISHLIST
+	ADD (CONSTRAINT R_4 FOREIGN KEY (A_CODE) REFERENCES ACCOMMODATION (A_CODE));
+
+
+
+
+
+----------------------------------------------------------------------------------
+DROP SEQUENCE ACC_SEQ; 
+DROP SEQUENCE BO_SEQ;
+DROP SEQUENCE COM_SEQ;
+DROP SEQUENCE GB_SEQ;
+DROP SEQUENCE MIL_SEQ;
+DROP SEQUENCE PAY_SEQ;
+DROP SEQUENCE PH_SEQ;
+DROP SEQUENCE REF_SEQ;
+DROP SEQUENCE RES_SEQ;
+DROP SEQUENCE REV_SEQ;
+DROP SEQUENCE ROM_SEQ;
+DROP SEQUENCE GB_SEB;
+   
+DROP TABLE "ACCOMMODATION" CASCADE CONSTRAINTS;
+DROP TABLE "ATTENDANCE" CASCADE CONSTRAINTS;
+DROP TABLE "BOARD" CASCADE CONSTRAINTS;
+DROP TABLE "CHAT_HIS" CASCADE CONSTRAINTS;
+DROP TABLE "COMENT" CASCADE CONSTRAINTS;
+DROP TABLE "COUPON" CASCADE CONSTRAINTS;
+DROP TABLE "CP_HAVING" CASCADE CONSTRAINTS;
+DROP TABLE "GB_PRTCP" CASCADE CONSTRAINTS;
+DROP TABLE "GROUPBUYING" CASCADE CONSTRAINTS;
+DROP TABLE "HIS_MILEAGE" CASCADE CONSTRAINTS;
+DROP TABLE "MEM_IMAGE" CASCADE CONSTRAINTS;
+DROP TABLE "MEMBER" CASCADE CONSTRAINTS;
+DROP TABLE "MILEAGE" CASCADE CONSTRAINTS;
+DROP TABLE "PAYMENT" CASCADE CONSTRAINTS;
+DROP TABLE "PHOTO" CASCADE CONSTRAINTS;
+DROP TABLE "REFUND" CASCADE CONSTRAINTS;
+DROP TABLE "RESERVATION" CASCADE CONSTRAINTS;
+DROP TABLE "REVIEW" CASCADE CONSTRAINTS;
+DROP TABLE "ROOM" CASCADE CONSTRAINTS;
+DROP TABLE "SERVICE_LIST" CASCADE CONSTRAINTS;
+DROP TABLE "SERVICE_INFO" CASCADE CONSTRAINTS;
+DROP TABLE "WISHLIST" CASCADE CONSTRAINTS;   
+   
+----------------------------------전체 삭제---------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--MEMBER 
+
+INSERT INTO member (mem_id, mem_pass, mem_name, mem_email, mem_tel, mem_birth, mem_gender, mem_code, mem_mil, mem_photo)
+VALUES ('LittleQueka', '1234', '김정하', 'little@naver.com', '010-1234-5678', TO_DATE('2002-12-15', 'YYYY-MM-DD'), 'Female','0', 1000, 'LittleQueka사진1.jpg');
+
+INSERT INTO member (mem_id, mem_pass, mem_name, mem_email, mem_tel, mem_birth, mem_gender, mem_code, mem_mil, mem_photo)
+VALUES ('BigQueka', '1234', '유선영', 'big@naver.com', '010-1234-5678', TO_DATE('2002-12-18', 'YYYY-MM-DD'), 'Female','0', 1000, 'BigQueka사진2.jpg');
+----------------------------------------------------------------------------------
+--BOARD 
+
+CREATE SEQUENCE bo_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+INSERT INTO BOARD (BO_CODE, BO_TYPE, BO_TITLE, BO_CONTENT, BO_DATE, MEM_ID)
+VALUES (('JJBO23' || LPAD(BO_SEQ.NEXTVAL,4,'0')), '1:1문의', '테스트제목입니다1', '테스트내용입니다1','2023-08-01', 'LittleQueka');
+
+INSERT INTO BOARD (BO_CODE, BO_TYPE, BO_TITLE, BO_CONTENT, BO_DATE, MEM_ID)
+VALUES (('JJBO23' || LPAD(BO_SEQ.NEXTVAL,4,'0')), '1:1문의', '테스트제목입니다2', '테스트내용입니다2','2023-08-01', 'BigQueka');
+
+---------------------------------------------------------------------------------
+--COMENT
+
+CREATE SEQUENCE com_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+       
+INSERT INTO COMENT (CO_CODE, BO_CODE, CO_CONTENT)
+VALUES ('JJCO23' || LPAD(COM_SEQ.NEXTVAL,4,'0'), 'JJBO230001', '테스트댓글입니다1');
+
+INSERT INTO COMENT (CO_CODE, BO_CODE, CO_CONTENT)
+VALUES ('JJCO23' || LPAD(COM_SEQ.NEXTVAL,4,'0'), 'JJBO230002', '테스트댓글입니다2');
+
+---------------------------------------------------------------------------------
+--ACCOMODATION
+
+ create sequence acc_seq         
+   increment by 1         
+   start with 1         
+   minvalue 1         
+   maxvalue 9999         
+   nocycle         
+   nocache         
+   noorder;         
+            
+   insert into accommodation (a_code, a_name, a_addr, a_tel, a_wnum, a_entime, a_extime, a_type)         
+   values('JJAC23' || lpad(acc_seq.nextval,4,'0'),'숙박업체1','대전광역시 중구','010-1234-5678' ,0,'0700','1800','호텔');  
+   
+   insert into accommodation (a_code, a_name, a_addr, a_tel, a_wnum, a_entime, a_extime, a_type)         
+   values('JJAC23' || lpad(acc_seq.nextval,4,'0'),'숙박업체2','대전광역시 서구','010-5656-5678' ,0,'0800','1800','펜션');  
+   
+   insert into accommodation (a_code, a_name, a_addr, a_tel, a_wnum, a_entime, a_extime, a_type)         
+   values('JJAC23' || lpad(acc_seq.nextval,4,'0'),'숙박업체3','대전광역시 동구','010-7777-2262' ,0,'0800','2000','게하');  
+-----------------------------------------------------------------------------------
+--MILEAGE
+COMMIT;
+
+CREATE SEQUENCE mil_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 99999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+
+
+   insert into MILEAGE (MIL_CODE, MIL_RESAMOUNT, MIL_USEAMOUNT, MEM_ID)
+   values('ML23' || lpad(mil_seq.nextval,5,'0'),'1000','0', 'LittleQueka');  
+   
+   insert into MILEAGE (MIL_CODE, MIL_RESAMOUNT, MIL_USEAMOUNT, MEM_ID)
+   values('ML23' || lpad(mil_seq.nextval,5,'0'),'1000','0', 'BigQueka'); 
+-----------------------------------------------------------------------------------
+--ROOM
+
+CREATE SEQUENCE rom_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into ROOM (R_CODE, A_CODE, R_TYPE, R_MIN, R_MAX, R_PRICE, R_INVEN)
+    values('JJRM23' || lpad(rom_seq.nextval,4,'0'),'JJAC230001','스위트','1', '2', '200000', '5');  
+
+    insert into ROOM (R_CODE, A_CODE, R_TYPE, R_MIN, R_MAX, R_PRICE, R_INVEN)
+    values('JJRM23' || lpad(rom_seq.nextval,4,'0'),'JJAC230002','스탠다드','2', '3', '300000', '5');  
+
+----------------------------------------------------------------------------------------------------
+--RESERVATION
+
+CREATE SEQUENCE res_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into reservaTion (RES_CODE, R_CODE, MEM_ID, RES_CIN, RES_COUT, RES_MEMO, RES_STATUS)
+    values('RS23' || lpad(res_seq.nextval,6,'0'),'JJRM230001','LittleQueka', '2023-08-02', '2023-08-04', '환기가 잘되는 곳으로 부탁해요.', '예약완료');  
+      
+    insert into reservaTion (RES_CODE, R_CODE, MEM_ID, RES_CIN, RES_COUT, RES_MEMO, RES_STATUS)
+    values('RS23' || lpad(res_seq.nextval,6,'0'),'JJRM230002','BigQueka', '2023-08-02', '2023-08-05', '통풍이 잘되는 곳으로 부탁해요.', '예약완료');  
+
+--------------------------------------------------------------------------------
+--PAYMENT
+
+CREATE SEQUENCE pay_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into payment (PAY_NO, RES_CODE, PAY_DATE, PAY_PRICE, PAY_METHOD)
+    values('PY23' || lpad(pay_seq.nextval,6,'0'),'RS23000001','2023-07-31','230000', '토스');  
+
+    insert into payment (PAY_NO, RES_CODE, PAY_DATE, PAY_PRICE, PAY_METHOD)
+    values('PY23' || lpad(pay_seq.nextval,6,'0'),'RS23000002','2023-07-21','330000', '토스');  
+
+-------------------------------------------------------------------------------------------------
+--REFUND
+CREATE SEQUENCE REF_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+   
+    insert into REFUND (RF_CODE, PAY_NO, RF_DATE)
+    values('RF23' || lpad(REF_seq.nextval,6,'0'),'PY23000001','2023-08-01');  
+       
+    insert into REFUND (RF_CODE, PAY_NO, RF_DATE)
+    values('RF23' || lpad(REF_seq.nextval,6,'0'),'PY23000002','2023-07-30');  
+--------------------------------------------------------------------------------------------
+--REVIEW
+CREATE SEQUENCE REV_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into REVIEW (REV_CODE, RES_CODE, REV_DATE, REV_SCORE, REV_TITLE, REV_CONTENT)
+    values('JJRV23' || lpad(REV_seq.nextval,4,'0'),'RS23000001','2023-08-02','4','리뷰제목테스트1','리뷰내용테스트1');  
+
+    insert into REVIEW (REV_CODE, RES_CODE, REV_DATE, REV_SCORE, REV_TITLE, REV_CONTENT)
+    values('JJRV23' || lpad(REV_seq.nextval,4,'0'),'RS23000002','2023-08-04', '5','리뷰제목테스트2','리뷰내용테스트2');  
+
+--------------------------------------------------------------------------------------------------
+--GROUPBUYING
+
+CREATE SEQUENCE GB_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+       
+    insert into GROUPBUYING (GB_CODE, MEM_ID, GB_TITLE, GB_CONTENT, GB_INVEN, GB_DATE)
+    values('JJGB23' || lpad(GB_seq.nextval,4,'0'),'LittleQueka','공구제목테스트1','공구내용테스트1','5','2023-08-01');  
+
+    insert into GROUPBUYING (GB_CODE, MEM_ID, GB_TITLE, GB_CONTENT, GB_INVEN, GB_DATE)
+    values('JJGB23' || lpad(GB_seq.nextval,4,'0'),'BigQueka','공구제목테스트2','공구내용테스트2','5','2023-08-02');  
+-----------------------------------------------------------------------------------------------
+--PHOTO
+CREATE SEQUENCE PH_seq INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 9999999999
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+
+    insert into PHOTO (PT_CODE, PT_TYPE, PT_OFILE, PT_SFILE)
+    values('J' || lpad(PH_seq.nextval,10,'0'),'프로필','오리진사진1.jpg','세이브사진1.jpg');  
+
+    insert into PHOTO (PT_CODE, PT_TYPE, PT_OFILE, PT_SFILE)
+    values('J' || lpad(PH_seq.nextval,10,'0'),'프로필','오리진사진2.jpg','세이브사진2.jpg');  
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+--ATTENDANCE
+
+insert into ATTENDANCE (MEM_ID, ATT_DATE)
+values('LittleQueka','2023-08-03');  
+
+insert into ATTENDANCE (MEM_ID, ATT_DATE)
+values('BigQueka','2023-08-03');  
+
+------------------------------------------------------------------------------------
+--GB_PRTCP
+
+       
+       
+   insert into GB_PRTCP (GB_CODE, MEM_ID)
+   values('JJGB230001','BigQueka');  
+
+   insert into GB_PRTCP (GB_CODE, MEM_ID)
+   values('JJGB230002','LittleQueka');  
+
+----------------------------------------------------------------------------------------
+--CHAT_HIS
+insert into CHAT_HIS (GB_CODE, CH_FILENAME)
+VALUES('JJGB230001', '채팅1');
+
+insert into CHAT_HIS (GB_CODE, CH_FILENAME)
+VALUES('JJGB230002', '채팅2');
+--------------------------------------------------------------------------------------
+--COUPON
+INSERT INTO coupon (CO_CODE, CO_NAME, CO_RATE)
+VALUES('CO001', '호텔 할인', 30);
+
+INSERT INTO coupon (CO_CODE, CO_NAME, CO_RATE)
+VALUES('CO002', '펜션 할인', 30);
+
+COMMIT;
+----------------------------------------------------------------------------------
+--CP_HAVING
+INSERT INTO CP_HAVING (CO_CODE, MEM_ID, CH_USE)
+VALUES('CO001','LittleQueka',0);
+
+INSERT INTO CP_HAVING (CO_CODE, MEM_ID, CH_USE)
+VALUES('CO001','BigQueka',1);
+------------------------------------------------------------------------------------
+--HIS_MILEAGE
+INSERT INTO HIS_MILEAGE (MIL_CODE, MEM_ID, MIL_DATE, MIL_SAVEHIS, MIL_USEHIS)
+VALUES('ML2300001', 'LittleQueka', '2023-08-03', '30', '0');
+
+INSERT INTO HIS_MILEAGE (MIL_CODE, MEM_ID, MIL_DATE, MIL_SAVEHIS, MIL_USEHIS)
+VALUES('ML2300002', 'BigQueka', '2023-08-03', '30', '0');
+-------------------------------------------------------------------------------------
+--SERVICE_INFO
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV01', '와이파이');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV02', '금연');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV03', '수영장');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV04', '스파');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV05', '피트니스');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV06', '편의점');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV07', '주차장');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV08', '세탁실');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV09', '레스토랑');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV10', '어메니티');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV11', '룸서비스');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV12', '라운지');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV13', '반려견동반');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV14', '카지노');
+
+INSERT INTO SERVICE_INFO (SI_CODE, SI_NAME)
+VALUES('JJSV15', '커피숍');
+
+-------------------------------------------------------------------------------------
+--SERVICE_LIST
+INSERT INTO SERVICE_LIST (A_CODE, SI_CODE)
+VALUES('JJAC230001', 'JJSV01');
+
+INSERT INTO SERVICE_LIST (A_CODE, SI_CODE)
+VALUES('JJAC230002', 'JJSV01');
+
+INSERT INTO SERVICE_LIST (A_CODE, SI_CODE)
+VALUES('JJAC230003', 'JJSV01');
+
+-----------------------------------------------------------------------------------
+--WISHLIST
+
+INSERT INTO WISHLIST (MEM_ID, A_CODE)
+VALUES('LittleQueka', 'JJAC230001');
+
+INSERT INTO WISHLIST (MEM_ID, A_CODE)
+VALUES('LittleQueka', 'JJAC230002');
+
+INSERT INTO WISHLIST (MEM_ID, A_CODE)
+VALUES('LittleQueka', 'JJAC230003');
+
+
+
+
+
+       
